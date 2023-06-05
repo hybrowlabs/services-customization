@@ -1,0 +1,18 @@
+[
+ {
+  "allow_guest": 0,
+  "api_method": "add_remark",
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Insert",
+  "event_frequency": "All",
+  "modified": "2023-06-04 17:38:38.831501",
+  "module": null,
+  "name": "Add Remark",
+  "reference_doctype": null,
+  "script": "remark = frappe.form_dict.remark\ndoc = frappe.form_dict.doc\n\nfrappe.db.set_value(\"Payment Ledger Entry\",doc,\"remarks\",remark);",
+  "script_type": "API"
+ }
+]

@@ -1,0 +1,13 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Payment Ledger Entry",
+  "enabled": 0,
+  "modified": "2023-06-04 17:37:10.919405",
+  "module": null,
+  "name": "Add Remark",
+  "script": "frappe.ui.form.on('Payment Ledger Entry',\"add_remark\",function(frm) {\n    let d = new frappe.ui.Dialog({\n            title: 'Enter Remark',\n            fields: [\n                {\n                    label: 'Remark',\n                    fieldname: 'remark',\n                    fieldtype: 'data',\n                    reqd:1\n                }],\n            primary_action_label: 'Submit',\n            primary_action(values) {\n                frappe.call({\n                    method:\"add_remark\",\n                    args:{\n                        remark: values.remark,\n                        doc: cur_frm.doc.name\n                    },\n                    callback: function(r){\n                        frappe.msgprint(\"Remark Added!\");\n                    }\n                });\n                d.hide();\n            }\n    });\n     d.show();\n            \n    \n});",
+  "view": "Form"
+ }
+]
