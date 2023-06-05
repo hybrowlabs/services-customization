@@ -123,6 +123,7 @@ class ReceivablePayableReport(object):
 					posting_date=ple.posting_date,
 					account_currency=ple.account_currency,
 					remarks=ple.remarks,
+					add_remark = """<button type ='button' data='%s' onClick='add_remark(this.getAttribute("data"))'>Add Remark</button>""" % (ple.name),
 					invoiced=0.0,
 					paid=0.0,
 					credit_note=0.0,
@@ -412,7 +413,7 @@ class ReceivablePayableReport(object):
 		party_details = self.get_party_details(row.party) or {}
 		row.is_msme = 0
 		if frappe.db.exists("Supplier",row.party):
-			if frappe.db.get_value("Supplier",row.party,'is_msme'):
+			if frappe.db.get_value("Supplier",row.party,'msme'):
 				row.is_msme = 1
 		row.update(party_details)
 		if self.filters.get(scrub(self.filters.party_type)):
@@ -693,6 +694,7 @@ class ReceivablePayableReport(object):
 		query = (
 			qb.from_(ple)
 			.select(
+				ple.name,
 				ple.account,
 				ple.voucher_type,
 				ple.voucher_no,

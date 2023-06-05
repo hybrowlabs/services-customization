@@ -213,6 +213,11 @@ frappe.query_reports["Accounts Receivable Custom"] = {
 	},
 
 	onload: function(report) {
+
+		function add_remark(data) {
+			alert(data)
+		}
+		
 		report.page.add_inner_button(__("Accounts Receivable Summary"), function() {
 			var filters = report.get_values();
 			frappe.set_route('query-report', 'Accounts Receivable Summary', {company: filters.company});
@@ -221,3 +226,4 @@ frappe.query_reports["Accounts Receivable Custom"] = {
 }
 
 erpnext.utils.add_dimensions('Accounts Receivable', 9);
+
