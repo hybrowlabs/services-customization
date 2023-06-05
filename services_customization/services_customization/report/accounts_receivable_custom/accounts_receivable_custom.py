@@ -410,8 +410,10 @@ class ReceivablePayableReport(object):
 	def set_party_details(self, row):
 		# customer / supplier name
 		party_details = self.get_party_details(row.party) or {}
+		row.is_msme = 0
 		if frappe.db.exists("Supplier",row.party):
-			row.is_msme = frappe.db.get_value("Supplier",row.party,'is_msme')
+			if frappe.db.get_value("Supplier",row.party,'is_msme'):
+				row.is_msme = 1
 		row.update(party_details)
 		if self.filters.get(scrub(self.filters.party_type)):
 			row.currency = row.account_currency
@@ -998,8 +1000,8 @@ class ReceivablePayableReport(object):
 			)
 
 		if self.filters.show_remarks:
-			self.add_column(label=_("Remarks"), fieldname="remarks", fieldtype="Text", width=200),
-			self.add_column(label=_("Add Remark"), fieldname="add_remark", fieldtype="Button", width=200),
+			self.add_column(label=_("Remarks"), fieldname="remarks", fieldtype="Text", width=200)
+			self.add_column(label=_("Add Remark"), fieldname="add_remark", fieldtype="Button", width=200)
 
 	def add_column(self, label, fieldname=None, fieldtype="Currency", options=None, width=120):
 		if not fieldname:
