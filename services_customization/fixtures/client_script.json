@@ -9,5 +9,16 @@
   "name": "Add Remark",
   "script": "frappe.ui.form.on('Payment Ledger Entry',\"add_remark\",function(frm) {\n    let d = new frappe.ui.Dialog({\n            title: 'Enter Remark',\n            fields: [\n                {\n                    label: 'Remark',\n                    fieldname: 'remark',\n                    fieldtype: 'data',\n                    reqd:1\n                }],\n            primary_action_label: 'Submit',\n            primary_action(values) {\n                frappe.call({\n                    method:\"add_remark\",\n                    args:{\n                        remark: values.remark,\n                        doc: cur_frm.doc.name\n                    },\n                    callback: function(r){\n                        frappe.msgprint(\"Remark Added!\");\n                    }\n                });\n                d.hide();\n            }\n    });\n     d.show();\n            \n    \n});",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Customer",
+  "enabled": 0,
+  "modified": "2023-06-05 06:39:27.236276",
+  "module": null,
+  "name": "Filter Company",
+  "script": "frappe.ui.form.on('Customer', {\n\trefresh(frm) {\n\t\tfrm.set_query(\"company_address_to_bill_from\", function() {\n        return {\n            \"filters\": {\n                \"is_your_company_address\": 1\n            }\n        };\n    });\n\t}\n});",
+  "view": "Form"
  }
 ]
